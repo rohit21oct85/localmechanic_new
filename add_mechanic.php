@@ -6,7 +6,7 @@ $db->connect();
 if($_REQUEST['id']){
     $url_name = "update";
     $url = 'add';
-    
+
     $mechanic_id = $_REQUEST['id'];
     $result_mechanic = $db->getMechanicDetails($mechanic_id);
     
@@ -331,13 +331,57 @@ if($_REQUEST['id']){
 
                         </div>
                 </div>
-                <?php   if( (isset($serviceId[0])  ==  4)){
-                            $display = "block";
-                            $amount = $serviceAmountData[0];
-                        }else{
-                            $display = "none";
-                            $amount = "";
-                        }
+                    <?php
+                    if( (isset($serviceId[0])  ==  4)){
+                        $display_4 = "block";
+                        $amount_4 = $serviceAmount[0];
+                    }else{
+                        $display_4 = "none";
+                        $amount_4 = "";
+                    }
+                    if( (isset($serviceId[1])  == 5)){
+                        $display_5 = "block";
+                        $amount_5 = $serviceAmount[1];
+                    }else{
+                        $display_5 = "none";
+                        $amount_5 = "";
+                    }
+                    if( (isset($serviceId[2])  == 6)){
+                        $display_6 = "block";
+                        $amount_6 = $serviceAmount[2];
+                    }else{
+                        $display_6 = "none";
+                        $amount_6 = "";
+                    }
+                    if( (isset($serviceId[3])  == 7)){
+                        $display_7 = "block";
+                        $amount_7 = $serviceAmount[3];
+                    }else{
+                        $display_7 = "none";
+                        $amount_7 = "";
+                    }
+                    if( (isset($serviceId[4])  == 1)){
+                        $display_1 = "block";
+                        $amount_1 = $serviceAmount[4];
+                    }else{
+                        $display_1 = "none";
+                        $amount_1 = "";
+                    }
+                    if( (isset($serviceId[5])  == 2)){
+                        $display_2 = "block";
+                        $amount_2 = $serviceAmount[5];
+                    }else{
+                        $display_2 = "none";
+                        $amount_2 = "";
+                    }
+                    if( (isset($serviceId[6])  == 3)){
+                        $display_3 = "block";
+                        $amount_3 = $serviceAmount[6];
+                    }else{
+                        $display_3 = "none";
+                        $amount_3 = "";
+                    }
+
                 ?>
                 <div class="form-group">
                         <label for="password" class="cols-sm-2 control-label">Service You Provide</label>
@@ -385,72 +429,72 @@ if($_REQUEST['id']){
                         </div>
                 </div>	
 
-                <div class="form-group tube" style="display:none">
+                <div class="form-group tube" style="display:<?php echo $display_4; ?>">
                         <label for="password" class="cols-sm-2 control-label">Tubeless Puncher Charges</label>
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="TubelessPuncherCharge" id="TubelessPuncherCharge"  placeholder="Enter Your Charge Amount"/>
+                                        <input type="text" class="form-control" name="TubelessPuncherCharge" value="<?php echo $amount_4; ?>" id="TubelessPuncherCharge"  placeholder="Enter Your Charge Amount"/>
                                 </div>
                         </div>
                 </div>	
 
-                <div class="form-group normal" style="display:none">
+                <div class="form-group normal" style="display:<?php echo $display_5; ?>">
                         <label for="password" class="cols-sm-2 control-label">Normal Puncher Repair Charge</label>
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="NormalPuncherCharge" id="NormalPuncherCharge"  placeholder="Enter Your Charge Amount"/>
+                                        <input type="text" class="form-control" name="NormalPuncherCharge" value="<?php echo $amount_5; ?>" id="NormalPuncherCharge"  placeholder="Enter Your Charge Amount"/>
                                 </div>
                         </div>
                 </div>	
 
-                <div class="form-group autokey" style="display:none">
+                <div class="form-group autokey" style="display:<?php echo $display_6; ?>">
                         <label for="password" class="cols-sm-2 control-label">Automatic Keymaking Charges</label>
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="AutomaticKeymakingCharges" id="AutomaticKeymakingCharges"  placeholder="Enter Your Charge Amount"/>
+                                        <input type="text" class="form-control" value="<?php echo $amount_6; ?>" name="AutomaticKeymakingCharges" id="AutomaticKeymakingCharges"  placeholder="Enter Your Charge Amount"/>
                                 </div>
                         </div>
                 </div>	
 
-                <div class="form-group manualkey" style="display:none">
+                <div class="form-group manualkey" style="display:<?php echo $display_7; ?>">
                         <label for="password" class="cols-sm-2 control-label">Manual Key Making Charges</label>
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="ManualKeyMakingCharges" id="ManualKeyMakingCharges"  placeholder="Enter Your Charge Amount"/>
+                                        <input type="text" class="form-control" name="ManualKeyMakingCharges" value="<?php echo $amount_7; ?>" id="ManualKeyMakingCharges"  placeholder="Enter Your Charge Amount"/>
                                 </div>
                         </div>
                 </div>	
 
-                <div class="form-group crane" style="display:none">
+                <div class="form-group crane" style="display:<?php echo $display_1; ?>">
                         <label for="password" class="cols-sm-2 control-label">Crane Service Charges</label>
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="CraneServiceCharges" id="CraneServiceCharges"  placeholder="Enter Your Charge Amoount"/>
+                                        <input type="text" class="form-control" name="CraneServiceCharges" value="<?php echo $amount_1; ?>" id="CraneServiceCharges"  placeholder="Enter Your Charge Amoount"/>
                                 </div>
                         </div>
                 </div>	
 
-                <div class="form-group wheelAlign" style="display:none">
+                <div class="form-group wheelAlign" style="display:<?php echo $display_2; ?>">
                         <label for="password" class="cols-sm-2 control-label">Wheel Alignment Charges</label>
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="WheelAlignmentCharges" id="WheelAlignmentCharges"  placeholder="Enter Your Charge Amount"/>
+                                        <input type="text" class="form-control" name="WheelAlignmentCharges" id="WheelAlignmentCharges" value="<?php echo $amount_2; ?>"  placeholder="Enter Your Charge Amount"/>
                                 </div>
                         </div>
                 </div>	
 
-                <div class="form-group wheelBal" style="display:none">
+                <div class="form-group wheelBal" style="display:<?php echo $display_3; ?>">
                         <label for="password" class="cols-sm-2 control-label">Wheel Balancing Charges</label>
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="WheelBalancingCharges" id="WheelBalancingCharges"  placeholder="Enter Your Charge Amount"/>
+                                        <input type="text" class="form-control" name="WheelBalancingCharges" value="<?php echo $amount_3; ?>" id="WheelBalancingCharges"  placeholder="Enter Your Charge Amount"/>
                                 </div>
                         </div>
                 </div>
