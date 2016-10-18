@@ -1,17 +1,18 @@
-<?php include 'top_head.php'; ?>
-<?php 
+<?php
+include 'top_head.php';
 require_once 'mainfunction.php';
 $db = new Database();
 $db->connect();
-if($_REQUEST['id']){
+if(isset($_REQUEST['id'])){
     $url_name = "update";
     $url = 'add';
 
     $mechanic_id = $_REQUEST['id'];
     $result_mechanic = $db->getMechanicDetails($mechanic_id);
     
-    /*echo "<pre>";
-    print_r($result_mechanic);*/
+    //echo "<pre>";
+    //print_r($result_mechanic);
+
  foreach ($result_mechanic as $value) {
     $fstr_mechanic_company_name = $value['fstr_mechanic_company_name'];
     $fnum_mechanic_id= $value['fnum_mechanic_id'];
@@ -41,17 +42,25 @@ if($_REQUEST['id']){
     $data = explode("," , $RepairData);
 
      $service_id_amout = $value['service_charge'];
+
+
      $serviceIdData = $service_id_amout['service_id'];
-     $serviceId = explode("," , $serviceIdData);
-     $serviceAmountData = $service_id_amout['service_amount'];
-     $serviceAmount = explode("," , $serviceAmountData);
+
+
+         $serviceId = explode("," , $serviceIdData);
+
+      $serviceAmountData = $service_id_amout['service_amount'];
+
+         $serviceAmount = explode("," , $serviceAmountData);
+
+
 
  }
     
 }else{
     $url_name = "add";
     $url = 'update';
-    
+
     $fstr_mechanic_company_name = "";
     $fnum_mechanic_id= "";
     $fstr_rand_tocken = "" ;
@@ -77,12 +86,14 @@ if($_REQUEST['id']){
     $fstr_mechanic_executive_name = "";
     $fstr_mechanic_interest = "";
     $data = "";
+    $serviceId="";
+    $serviceAmount="";
 }
 
 
 ?>
 
-<nav class="no-curve" style="padding:0px 0px 0px 100px;background:#034a67; color:#fff; height:35px; line-height:35px;margin-top:116px;position: fixed;width: 100%;z-index:9;">
+<nav class="no-curve" style="padding:0px 0px 0px 100px;background:#036c9f; color:#fff; height:35px; line-height:35px;margin-top:116px;position: fixed;width: 100%;z-index:9;">
     <div class="container-fluid">
         <span style="margin-left: 15px;">Home > <?php echo $url_name; ?> Mechanic </span>
     </div>	
@@ -221,7 +232,7 @@ if($_REQUEST['id']){
                                   <span class="input-group-addon">
                                         <input type="radio" name="24service" id="close" aria-label="..." value="No" <?php if($fnum_mechanic_available24hrs == "No") { echo "checked"; } ?> >
                                   </span>
-                                  <input type="text" class="form-control" readonly="true" aria-label="..." value="No">
+                                  <input type="text" class="form-control" readonly="true" aria-label="..." value="No" title="">
                                 </div><!-- /input-group -->
 
                         </div>
@@ -332,14 +343,15 @@ if($_REQUEST['id']){
                         </div>
                 </div>
                     <?php
-                    if( (isset($serviceId[0])  ==  4)){
+                    if( isset($serviceId[0])  ==  4){
                         $display_4 = "block";
                         $amount_4 = $serviceAmount[0];
                     }else{
                         $display_4 = "none";
                         $amount_4 = "";
+
                     }
-                    if( (isset($serviceId[1])  == 5)){
+                    if( isset($serviceId[1])  == 5){
                         $display_5 = "block";
                         $amount_5 = $serviceAmount[1];
                     }else{
@@ -353,28 +365,28 @@ if($_REQUEST['id']){
                         $display_6 = "none";
                         $amount_6 = "";
                     }
-                    if( (isset($serviceId[3])  == 7)){
+                    if( isset($serviceId[3])  == 7){
                         $display_7 = "block";
                         $amount_7 = $serviceAmount[3];
                     }else{
                         $display_7 = "none";
                         $amount_7 = "";
                     }
-                    if( (isset($serviceId[4])  == 1)){
+                    if( isset($serviceId[4])  == 1){
                         $display_1 = "block";
                         $amount_1 = $serviceAmount[4];
                     }else{
                         $display_1 = "none";
                         $amount_1 = "";
                     }
-                    if( (isset($serviceId[5])  == 2)){
+                    if( isset($serviceId[5])  == 2){
                         $display_2 = "block";
                         $amount_2 = $serviceAmount[5];
                     }else{
                         $display_2 = "none";
                         $amount_2 = "";
                     }
-                    if( (isset($serviceId[6])  == 3)){
+                    if( isset($serviceId[6])  == 3){
                         $display_3 = "block";
                         $amount_3 = $serviceAmount[6];
                     }else{
@@ -498,20 +510,38 @@ if($_REQUEST['id']){
                                 </div>
                         </div>
                 </div>
+                <?php
+                if($fstr_mechanic_interest == "Not Interested"){
+                    $checked_1 = "checked";
+                }else{
+                    $checked_1 = "";
+                }
+                if($fstr_mechanic_interest == "Interested"){
+                    $checked_2 = "checked";
+                }else{
+                    $checked_2 = "";
+                }
+                if($fstr_mechanic_interest == "Very Much Interested"){
+                    $checked_3 = "checked";
+                }else{
+                    $checked_3 = "";
+                }
+                ?>
+
                 <div class="form-group">
                         <label for="password" class="cols-sm-2 control-label">Interest in Local Mechanic</label>
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                   <span class="input-group-addon">
-                                        <input type="radio" name="intrestinlocalmachanic" aria-label="..." value="Not Interested">
+                                        <input type="radio" name="intrestinlocalmachanic" aria-label="..." <?php echo $checked_1; ?> value="Not Interested">
                                   </span>
                                   <input type="text" class="form-control" readonly="true" aria-label="..." value="Not Interested">
                                   <span class="input-group-addon">
-                                        <input type="radio" name="intrestinlocalmachanic" aria-label="..." value="Interested">
+                                        <input type="radio" name="intrestinlocalmachanic" aria-label="..." <?php echo $checked_2; ?> value="Interested">
                                   </span>
                                   <input type="text" class="form-control" readonly="true" aria-label="..." value="Interested">
                                   <span class="input-group-addon">
-                                        <input type="radio" name="intrestinlocalmachanic" aria-label="..." value="Very Much Interested">
+                                        <input type="radio" name="intrestinlocalmachanic" aria-label="..." <?php echo $checked_3; ?> value="Very Much Interested">
                                   </span>
                                   <input type="text" class="form-control" readonly="true" aria-label="..." value="Very Much Interested">
                                 </div><!-- /input-group -->
