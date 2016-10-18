@@ -37,8 +37,15 @@ if($_REQUEST['id']){
     $fnum_mechanic_contact_mobile_number = $value['fnum_mechanic_contact_mobile_number'];
     $fstr_mechanic_executive_name = $value['fstr_mechanic_executive_name'];
     $fstr_mechanic_interest = $value['fstr_mechanic_interest'];
-     
-     
+    $RepairData = $value['mechanicRepair'];
+    $data = explode("," , $RepairData);
+
+     $service_id_amout = $value['service_charge'];
+     $serviceIdData = $service_id_amout['service_id'];
+     $serviceId = explode("," , $serviceIdData);
+     $serviceAmountData = $service_id_amout['service_amount'];
+     $serviceAmount = explode("," , $serviceAmountData);
+
  }
     
 }else{
@@ -69,6 +76,7 @@ if($_REQUEST['id']){
     $fnum_mechanic_contact_mobile_number = "";
     $fstr_mechanic_executive_name = "";
     $fstr_mechanic_interest = "";
+    $data = "";
 }
 
 
@@ -207,11 +215,11 @@ if($_REQUEST['id']){
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                   <span class="input-group-addon">
-                                        <input type="radio" name="24service" id="open" checked aria-label="..." value="Yes">
+                                        <input type="radio" name="24service" id="open" <?php if($fnum_mechanic_available24hrs == "Yes") { echo "checked"; } ?> aria-label="..." value="Yes">
                                   </span>
                                   <input type="text" class="form-control" readonly="true" aria-label="..." value="Yes">
                                   <span class="input-group-addon">
-                                        <input type="radio" name="24service" id="close" aria-label="..." value="No">
+                                        <input type="radio" name="24service" id="close" aria-label="..." value="No" <?php if($fnum_mechanic_available24hrs == "No") { echo "checked"; } ?> >
                                   </span>
                                   <input type="text" class="form-control" readonly="true" aria-label="..." value="No">
                                 </div><!-- /input-group -->
@@ -225,6 +233,13 @@ if($_REQUEST['id']){
                         <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
                                 <select class="form-control" name="ot" id="ot">
+                                    <?php
+                                    if($fnum_mechanic_available24hrs == "No"){
+                                        ?>
+                                        <option value="<?php echo $fstr_mechanic_openingTime; ?>" selected><?php echo $fstr_mechanic_openingTime; ?></option>
+                                        <?php
+                                    }else{
+                                        ?>
                                         <option>Select Your Opening Time</option>
                                         <option value="06:00am">06:00 AM</option>
                                         <option value="07:00am">07:00 AM</option>
@@ -236,7 +251,10 @@ if($_REQUEST['id']){
                                         <option value="01:00pm">01:00 PM</option>
                                         <option value="02:00pm">02:00 PM</option>
                                         <option value="03:00pm">03:00 PM</option>
-                                        <option></option>
+                                        <?php
+                                    }
+                                    ?>
+
                                 </select>
                         </div>
                         </div>
@@ -248,14 +266,24 @@ if($_REQUEST['id']){
                                 <div class="input-group ct">
                                         <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
                                         <select class="form-control" name="ct" id="ct">
-                                        <option>Select Your Opening Time</option>
-                                        <option value="06:00pm">06:00 PM</option>
-                                        <option value="07:00pm">07:00 PM</option>
-                                        <option value="08:00pm">08:00 PM</option>
-                                        <option value="09:00pm">09:00 PM</option>
-                                        <option value="10:00pm">10:00 PM</option>
-                                        <option value="11:00pm">11:00 PM</option>
-                                        <option value="12:00am">12:00 AM</option>
+                                             <?php
+                                    if($fnum_mechanic_available24hrs == "No"){
+                                        ?>
+                                        <option value="<?php echo $fstr_mechanic_closingTime; ?>" selected><?php echo $fstr_mechanic_closingTime; ?></option>
+                                        <?php
+                                    }else{
+                                        ?>
+                                            <option>Select Your Opening Time</option>
+                                            <option value="06:00pm">06:00 PM</option>
+                                            <option value="07:00pm">07:00 PM</option>
+                                            <option value="08:00pm">08:00 PM</option>
+                                            <option value="09:00pm">09:00 PM</option>
+                                            <option value="10:00pm">10:00 PM</option>
+                                            <option value="11:00pm">11:00 PM</option>
+                                            <option value="12:00am">12:00 AM</option>
+                                        <?php
+                                            }
+                                        ?>
                                 </select>
                                 </div>
                         </div>
@@ -267,7 +295,7 @@ if($_REQUEST['id']){
                         <div class="cols-sm-10">
                                 <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="range" id="range"  placeholder="Enter your range of service"/>
+                                        <input type="text" class="form-control" name="range" value="<?php echo $fnum_mechanic_rangeService; ?>" id="range"  placeholder="Enter your range of service"/>
                                 </div>
                         </div>
                 </div>	
@@ -280,22 +308,22 @@ if($_REQUEST['id']){
                         <div class="cols-sm-10">
                                 <div class="input-group col-md-12">
                               <span class="input-group-addon">
-                                        <input type="checkbox" name="repair[]" aria-label="..." value="1">
+                                        <input type="checkbox" name="repair[]" <?php if(isset($data[0]) == 1){ echo "checked";} ?> aria-label="..." value="1">
                                   </span>
                                   <input type="text" class="form-control" value="Car" aria-label="...">
                                   <span class="input-group-addon">
-                                        <input type="checkbox" name="repair[]" aria-label="..." value="2">
+                                        <input type="checkbox" name="repair[]" aria-label="..." value="2" <?php if(isset($data[1]) == 2){ echo "checked";} ?>>
                                   </span>
                                   <input type="text" class="form-control" value="Jeep" aria-label="...">
                             </div>  
 
                                  <div class="input-group col-md-12">
                               <span class="input-group-addon">
-                                        <input type="checkbox" name="repair[]"  aria-label="..." value="3">
+                                        <input type="checkbox" name="repair[]"  aria-label="..." value="3" <?php if(isset($data[3]) == 3){ echo "checked";} ?> >
                                   </span>
                                   <input type="text" class="form-control" value="Bike" aria-label="...">
                                   <span class="input-group-addon">
-                                        <input type="checkbox" name="repair[]" aria-label="..." value="4">
+                                        <input type="checkbox" name="repair[]" aria-label="..." value="4" <?php if(isset($data[4]) == 4){ echo "checked";}?> >
                                   </span>
                                   <input type="text" class="form-control" value="Scooter" aria-label="...">
                                   </div>
@@ -303,44 +331,52 @@ if($_REQUEST['id']){
 
                         </div>
                 </div>
+                <?php   if( (isset($serviceId[0])  ==  4)){
+                            $display = "block";
+                            $amount = $serviceAmountData[0];
+                        }else{
+                            $display = "none";
+                            $amount = "";
+                        }
+                ?>
                 <div class="form-group">
                         <label for="password" class="cols-sm-2 control-label">Service You Provide</label>
                         <div class="cols-sm-10">
                                 <div class="input-group col-md-12">
                               <span class="input-group-addon">
-                                        <input type="checkbox" name="service[]" id="tube"  aria-label="..." value="4">
+                                        <input type="checkbox" name="service[]" id="tube"  aria-label="..." value="4"  <?php if(isset($serviceId[0])  ==  4){ echo "checked" ;}?> >
                                   </span>
                                   <input type="text" class="form-control" value="Tubeless Puncher Charges" aria-label="...">
                                   <span class="input-group-addon">
-                                        <input type="checkbox" name="service[]" id="normal" aria-label="..." value="5">
+                                        <input type="checkbox" name="service[]" id="normal" aria-label="..." value="5" <?php if(isset($serviceId[1])  ==  5){ echo "checked" ;}?> >
                                   </span>
                                   <input type="text" class="form-control" value="Normal Puncher Repair Charge" aria-label="...">
                             </div>  
 
                                  <div class="input-group col-md-12">
                               <span class="input-group-addon">
-                                        <input type="checkbox" name="service[]" id="autokey"  aria-label="..." value="6">
+                                        <input type="checkbox" name="service[]" id="autokey"  aria-label="..." value="6" <?php if(isset($serviceId[2])  == 6){ echo "checked" ;}?>  >
                                   </span>
                                   <input type="text" class="form-control" value="Automatic Keymaking Charges" aria-label="...">
                                   <span class="input-group-addon">
-                                        <input type="checkbox" name="service[]" id="manualkey" aria-label="..." value="7">
+                                        <input type="checkbox" name="service[]" id="manualkey" aria-label="..." value="7" <?php if(isset($serviceId[3])  ==  7){ echo "checked" ;}?> >
                                   </span>
                                   <input type="text" class="form-control" value="Manual Key Making Charges" aria-label="...">
                                   </div>
                                   <div class="input-group col-md-12">
                               <span class="input-group-addon">
-                                        <input type="checkbox" aria-label="..." id="crane" name="service[]" value="1">
+                                        <input type="checkbox" aria-label="..." id="crane" name="service[]" value="1"  <?php if(isset($serviceId[4])  ==  1){ echo "checked" ;}?> >
                                   </span>
                                   <input type="text" class="form-control" value="Crane Service Charges" aria-label="...">
                                   <span class="input-group-addon">
-                                        <input type="checkbox" aria-label="..." id="wheelAlign" value="2" name="service[]">
+                                        <input type="checkbox" aria-label="..." id="wheelAlign" value="2" name="service[]" <?php if(isset($serviceId[5])  ==  2){ echo "checked" ;}?>>
                                   </span>
                                   <input type="text" class="form-control" value="Wheel Alignment Charges" aria-label="...">
 
                                   </div>
                                   <div class="input-group col-md-12">
                               <span class="input-group-addon">
-                                        <input type="checkbox" aria-label="..." value="3" id="wheelBal" name="service[]">
+                                        <input type="checkbox" aria-label="..." value="3" id="wheelBal" name="service[]" <?php if(isset($serviceId[6])  ==  3){ echo "checked" ;}?>>
                                   </span>
                                   <input type="text" class="form-control" value="Wheel Balancing Charges" aria-label="...">
 

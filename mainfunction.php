@@ -194,9 +194,40 @@ class Database
             $data_array['fnum_mechanic_contact_mobile_number'] = $results['fnum_mechanic_contact_mobile_number'];
             $data_array['fstr_mechanic_executive_name'] = $results['fstr_mechanic_executive_name'];
             $data_array['fstr_mechanic_interest'] = $results['fstr_mechanic_interest'];
-
+            $data_array['mechanicRepair'] = $this->getRepairCategory($mechanic_id);
+            $data_array['service_charge'] = $this->getServiceCharge($mechanic_id);
             $data_top_array[] = $data_array;
             return $data_top_array;
+        }
+
+    /**
+     * @param $mechanic_id
+     * @return mixed
+     */
+    function getRepairCategory($mechanic_id){
+            $sql_query = "SELECT group_concat(fnum_repair_category_id) as repair_id FROM mechanicrepair  WHERE fnum_mechanic_id = $mechanic_id";
+            $mysql_query = mysqli_query($this->dbh,$sql_query);
+            $data_top_array = array();
+            $results = mysqli_fetch_array($mysql_query);
+            $repair_id = $results['repair_id'];
+            return  $repair_id;
+        }
+
+    /**
+     * @param $mechanic_id
+     * @return mixed
+     */
+    function getServiceCharge($mechanic_id){
+            $sql_query = "SELECT group_concat(fnum_service_master_id) as service, group_concat(fstr_service_charges) as charge  FROM mechanicservice  
+                          WHERE fnum_mechanic_id = $mechanic_id";
+
+            $mysql_query = mysqli_query($this->dbh,$sql_query);
+            $data_top_array = array();
+            $results = mysqli_fetch_array($mysql_query);
+            $data_top_array['service_id'] = $results['service'];
+            $data_top_array['service_amount'] = $results['charge'];
+
+            return  $data_top_array;
         }
 
 }
